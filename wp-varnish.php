@@ -126,6 +126,8 @@ class WPVarnish {
     add_action("edit_category",array(&$this, 'WPVarnishPurgeCategory'), 99);       
     //Link Categories
     add_action("edit_link_category",array(&$this, 'WPVarnishPurgeLinkCategory'), 99);
+    //Tag categories
+    add_action("edit_post_tag",array(&$this, 'WPVarnishPurgeTagCategory'), 99);
     
     
   }
@@ -137,8 +139,7 @@ class WPVarnish {
   function WPVarnishPurgeCommonObjects() {
     $this->WPVarnishPurgeObject("/");
     $this->WPVarnishPurgeObject("/feed/");
-    $this->WPVarnishPurgeObject("/feed/atom/");
-    $this->WPVarnishPurgeObject("/category/(.*)");
+    $this->WPVarnishPurgeObject("/feed/atom/");    
 
     // Also purges page navigation
     if (get_option($this->wpv_update_pagenavi_optname) == 1) {
@@ -217,6 +218,11 @@ class WPVarnish {
      if (is_active_widget(false,false,'links')){
         $this->WPVarnishPurgeAll();
      }
+  }
+  
+  // Purge a specific post tag
+  function WPVarnishPurgeTagCategory($catid){
+        $this->WPVarnishPurgeObject(str_replace(get_bloginfo('wpurl'),"",get_tag_link($catid)));                       
   }
   
   // Purge archives pages for a post
