@@ -113,6 +113,12 @@ class WPVarnish {
     $theme = get_option( 'stylesheet' );
     add_action("update_option_theme_mods_$theme",array(&$this, 'WPVarnishPurgeAll'), 99);
     
+    // Links
+    add_action("deleted_link",array(&$this, 'WPVarnishPurgeLink'), 99);
+    add_action("edit_link",array(&$this, 'WPVarnishPurgeLink'), 99);
+    add_action("add_link",array(&$this, 'WPVarnishPurgeLink'), 99);
+    
+    
   }
 
   function WPVarnishLocalization() {
@@ -204,6 +210,14 @@ class WPVarnish {
   function WPVarnishPurgeAjaxCalendar($wpv_postid){
      $month=str_replace(get_bloginfo('wpurl'),"",get_month_link(get_post_time('Y',false,$wpv_postid), get_post_time('m',true,$wpv_postid)));
      $this->WPVarnishPurgeObject($month.'?ajax=true');
+  }
+  
+  // Purge when links modified/edited/deleted
+  function WPVarnishPurgeLink($linkId){
+     // Purge all blog if widget links used in any sidebar
+     if (  is_active_widget(false,false,'links')){
+        $this->WPVarnishPurgeAll();      
+     }
   }
   
 
