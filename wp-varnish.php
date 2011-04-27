@@ -118,6 +118,9 @@ class WPVarnish {
     add_action("edit_link",array(&$this, 'WPVarnishPurgeLink'), 99);
     add_action("add_link",array(&$this, 'WPVarnishPurgeLink'), 99);
     
+    //Taxonomy
+    add_action("edit_term_taxonomy",array(&$this, 'WPVarnishPurgeCategory'), 99);       
+    
     
   }
 
@@ -190,13 +193,26 @@ class WPVarnish {
   function WPVarnishPurgeCategories($wpv_postid){
     $list=get_the_category($wpv_postid);
     foreach($list as $categoryObject){
-       $this->WPVarnishPurgeTaxonomy($categoryObject->cat_ID);
+       $this->WPVarnishPurgeCategory($categoryObject->cat_ID);
     }
   }
   
-  // Purge a specific category/taxonomy
-  function WPVarnishPurgeTaxonomy($taxid){
-     $this->WPVarnishPurgeObject(str_replace(get_bloginfo('wpurl'),"",get_category_link($taxid)));
+  // Purge a specific category
+  function WPVarnishPurgeCategory($taxid){
+     $cat=get_category($catid);
+     switch($cat->taxonomy){
+        case 'link_category':
+           if (($cat->taxonomy=='link_category')&&is_active_widget(false,false,'links')){
+              $this->WPVarnishPurgeAll();
+           }
+           break;
+        case 'category':
+           if (  is_active_widget(false,false,'widget_categories') ){
+              $this->WPVarnishPurgeAll();
+           } else {
+              $this->WPVarnishPurgeObject(str_replace(get_bloginfo('wpurl'),"",get_category_link($taxid)));   
+           }      
+     }               
   }
   
   // Purge archives pages for a post
