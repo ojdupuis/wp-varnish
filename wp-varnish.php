@@ -190,8 +190,13 @@ class WPVarnish {
   function WPVarnishPurgeCategories($wpv_postid){
     $list=get_the_category($wpv_postid);
     foreach($list as $categoryObject){
-       $this->WPVarnishPurgeObject(str_replace(get_bloginfo('wpurl'),"",get_category_link($categoryObject->cat_ID)));
+       $this->WPVarnishPurgeTaxonomy($categoryObject->cat_ID);
     }
+  }
+  
+  // Purge a specific category/taxonomy
+  function WPVarnishPurgeTaxonomy($taxid){
+     $this->WPVarnishPurgeObject(str_replace(get_bloginfo('wpurl'),"",get_category_link($taxid)));
   }
   
   // Purge archives pages for a post
