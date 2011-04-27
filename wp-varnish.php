@@ -23,6 +23,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
+
 class WPVarnish {
   public $wpv_addr_optname;
   public $wpv_port_optname;
@@ -41,6 +42,7 @@ class WPVarnish {
     $this->wpv_update_pagenavi_optname = "wpvarnish_update_pagenavi";
     $this->wpv_update_commentnavi_optname = "wpvarnish_update_commentnavi";
     $this->wpv_use_adminport_optname = "wpvarnish_use_adminport";
+    
     $wpv_addr_optval = array ("127.0.0.1");
     $wpv_port_optval = array (80);
     $wpv_secret_optval = array ("");
@@ -153,16 +155,43 @@ class WPVarnish {
    */
   function WPVarnishPurgePostDependencies($wpv_postid){
      $this->WPVarnishPurgeCommonObjects($wpv_postid);
-     //ODU  Purge categories
+     //Purge categories
      $this->WPVarnishPurgeCategories($wpv_postid);
-     // PDU Purges Archives
+     // Purges Archives
      $this->WPVarnishPurgeArchives($wpv_postid);
     
-     // ODU Plugin ajax-calendar http://wordpress.org/extend/plugins/ajax-calendar/
+     // Plugin ajax-calendar http://wordpress.org/extend/plugins/ajax-calendar/
      if (  array_key_exists('ajax-calendar/ajax-calendar.php', get_site_option( 'active_sitewide_plugins') )){
        $this->WPVarnishPurgeAjaxCalendar($wpv_postid);
      }
   }  
+  
+  // Purge category pages for a post
+  function WPVarnishPurgeCategories($wpv_postid){
+    $list=get_the_category($wpv_postid);
+    foreach($list as $categoryObject){
+       $this->WPVarnishPurgeObject(str_replace(get_bloginfo('wpurl'),"",get_category_link($categoryObject->cat_ID)));
+    }
+  }
+  
+  // Purge archives pages for a post
+  function WPVarnishPurgeArchives($wpv_postid){
+    $day=str_replace(get_bloginfo('wpurl'),"",get_day_link(get_post_time('Y',false,$wpv_postid), get_post_time('m',true,$wpv_postid),get_post_time('d',true,$wpv_postid)));
+    $month=str_replace(get_bloginfo('wpurl'),"",get_month_link(get_post_time('Y',false,$wpv_postid), get_post_time('m',true,$wpv_postid)));
+    $year=str_replace(get_bloginfo('wpurl'),"",get_year_link(get_post_time('Y',false,$wpv_postid)));
+
+    $this->WPVarnishPurgeObject($day);
+    $this->WPVarnishPurgeObject($month);
+    $this->WPVarnishPurgeObject($year);
+
+  }
+
+  // Purge Ajax Calendar for a post
+  function WPVarnishPurgeAjaxCalendar($wpv_postid){
+     $month=str_replace(get_bloginfo('wpurl'),"",get_month_link(get_post_time('Y',false,$wpv_postid), get_post_time('m',true,$wpv_postid)));
+     $this->WPVarnishPurgeObject($month.'?ajax=true');
+  }
+  
 
   function WPVarnishAdminMenu() {
     if (!defined('VARNISH_HIDE_ADMINMENU')) {
