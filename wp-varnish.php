@@ -85,7 +85,7 @@ class WPVarnish {
 
     // When posts/pages are published, edited or deleted
     add_action('edit_post', array(&$this, 'WPVarnishPurgePost'), 99);
-    add_action('edit_post', array(&$this, 'WPVarnishPurgeCommonObjects'), 99);
+    add_action('edit_post', array(&$this, 'WPVarnishPurgePostDependencies'), 99);
 
     // When comments are made, edited or deleted
     add_action('comment_post', array(&$this, 'WPVarnishPurgePostComments'),99);
@@ -148,6 +148,21 @@ class WPVarnish {
 
     }
   }
+  /*
+   * All purge orders to be sent when a post is modified
+   */
+  function WPVarnishPurgePostDependencies($wpv_postid){
+     $this->WPVarnishPurgeCommonObjects($wpv_postid);
+     //ODU  Purge categories
+     $this->WPVarnishPurgeCategories($wpv_postid);
+     // PDU Purges Archives
+     $this->WPVarnishPurgeArchives($wpv_postid);
+    
+     // ODU Plugin ajax-calendar http://wordpress.org/extend/plugins/ajax-calendar/
+     if (  array_key_exists('ajax-calendar/ajax-calendar.php', get_site_option( 'active_sitewide_plugins') )){
+       $this->WPVarnishPurgeAjaxCalendar($wpv_postid);
+     }
+  }  
 
   function WPVarnishAdminMenu() {
     if (!defined('VARNISH_HIDE_ADMINMENU')) {
