@@ -128,8 +128,7 @@ class WPVarnish {
     add_action("edit_link_category",array(&$this, 'WPVarnishPurgeLinkCategory'), 99);
     //Tag categories
     add_action("edit_post_tag",array(&$this, 'WPVarnishPurgeTagCategory'), 99);
-    
-    
+        
   }
 
   function WPVarnishLocalization() {
@@ -264,7 +263,7 @@ class WPVarnish {
   
 
   function WPVarnishAdminMenu() {
-    if (!defined('VARNISH_HIDE_ADMINMENU')) {
+    if (!defined('VARNISH_HIDE_ADMINMENU')||(is_site_admin())) {
       add_options_page(__('WP-Varnish Configuration','wp-varnish'), 'WP-Varnish', 1, 'WPVarnish', array(&$this, 'WPVarnishAdmin'));
     }
   }
