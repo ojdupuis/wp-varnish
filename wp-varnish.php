@@ -118,8 +118,10 @@ class WPVarnish {
     add_action("edit_link",array(&$this, 'WPVarnishPurgeLink'), 99);
     add_action("add_link",array(&$this, 'WPVarnishPurgeLink'), 99);
     
-    //Taxonomy
-    add_action("edit_term_taxonomy",array(&$this, 'WPVarnishPurgeCategory'), 99);       
+    //Post Categories
+    add_action("edit_category",array(&$this, 'WPVarnishPurgeCategory'), 99);       
+    //Link Categories
+    add_action("edit_link_category",array(&$this, 'WPVarnishPurgeLinkCategory'), 99);
     
     
   }
@@ -197,22 +199,20 @@ class WPVarnish {
     }
   }
   
-  // Purge a specific category
-  function WPVarnishPurgeCategory($taxid){
-     $cat=get_category($catid);
-     switch($cat->taxonomy){
-        case 'link_category':
-           if (($cat->taxonomy=='link_category')&&is_active_widget(false,false,'links')){
-              $this->WPVarnishPurgeAll();
-           }
-           break;
-        case 'category':
-           if (  is_active_widget(false,false,'widget_categories') ){
-              $this->WPVarnishPurgeAll();
-           } else {
-              $this->WPVarnishPurgeObject(str_replace(get_bloginfo('wpurl'),"",get_category_link($taxid)));   
-           }      
-     }               
+  // Purge a specific post category
+  function WPVarnishPurgeCategory($catid){
+     if (  is_active_widget(false,false,'categories') ){
+        $this->WPVarnishPurgeAll();
+     } else {
+        $this->WPVarnishPurgeObject(str_replace(get_bloginfo('wpurl'),"",get_category_link($catid)));   
+     }                    
+  }
+
+  // Purge a specific link category
+  function WPVarnishPurgeLinkCategory($catid){
+     if (is_active_widget(false,false,'links')){
+        $this->WPVarnishPurgeAll();
+     }
   }
   
   // Purge archives pages for a post
