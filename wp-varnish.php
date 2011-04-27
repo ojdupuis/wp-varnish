@@ -189,6 +189,8 @@ class WPVarnish {
      $this->WPVarnishPurgeCategories($wpv_postid);
      // Purges Archives
      $this->WPVarnishPurgeArchives($wpv_postid);
+     //Purge Tags
+     $this->WPVarnishPurgeTags($wpv_postid);
     
      // Plugin ajax-calendar http://wordpress.org/extend/plugins/ajax-calendar/
      if (  array_key_exists('ajax-calendar/ajax-calendar.php', get_site_option( 'active_sitewide_plugins') )){
@@ -223,6 +225,15 @@ class WPVarnish {
   // Purge a specific post tag
   function WPVarnishPurgeTagCategory($catid){
         $this->WPVarnishPurgeObject(str_replace(get_bloginfo('wpurl'),"",get_tag_link($catid)));                       
+  }
+  
+    // Purge tag pages for a post
+  function WPVarnishPurgeTags($wpv_postid){
+    $list=get_the_tags($wpv_postid);
+    
+    foreach($list as $tagObject){
+       $this->WPVarnishPurgeTagCategory($tagObject->term_id);
+    }
   }
   
   // Purge archives pages for a post
