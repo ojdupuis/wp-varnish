@@ -23,6 +23,8 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
+// List of url already purged
+$wpvarnish_url_purged=array();
 
 class WPVarnish {
   public $wpv_addr_optname;
@@ -31,6 +33,8 @@ class WPVarnish {
   public $wpv_timeout_optname;
   public $wpv_update_pagenavi_optname;
   public $wpv_update_commentnavi_optname;
+  
+  
 
   function WPVarnish() {
     global $post;
@@ -379,7 +383,14 @@ class WPVarnish {
   // from the varnish cache.
   function WPVarnishPurgeObject($wpv_url) {
     global $varnish_servers;
+    // list of urls already purged
+    global $wpvarnish_url_purged;
 
+    // if url already purged or purgeAll already sent
+    if (in_array($wpv_url,$wpvarnish_url_purged)){   
+       return;
+    }
+    
     if (is_array($varnish_servers)) {
        foreach ($varnish_servers as $server) {
           list ($host, $port) = explode(':', $server);
@@ -430,6 +441,8 @@ class WPVarnish {
       fwrite($varnish_sock, $out);
       fclose($varnish_sock);
     }
+    // store url as purged
+    $wpvarnish_url_purged[]=$wpv_url;
   }
 
   function WPAuth($challenge, $secret) {
