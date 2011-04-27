@@ -99,6 +99,20 @@ class WPVarnish {
     // When posts or pages are deleted
     add_action('deleted_post', array(&$this, 'WPVarnishPurgePost'), 99);
     add_action('deleted_post', array(&$this, 'WPVarnishPurgeCommonObjects'), 99);
+    
+    // When Theme is changed
+    add_action('switch_theme',array(&$this, 'WPVarnishPurgeAll'), 99);
+
+    // When Widgets are added or removed
+    add_action('update_option_sidebars_widgets',array(&$this, 'WPVarnishPurgeAll'), 99);
+
+    // When widget option is saved
+    add_action('widgets.php',array(&$this, 'WPVarnishPurgeAll'), 99);
+
+    // modification du theme courant
+    $theme = get_option( 'stylesheet' );
+    add_action("update_option_theme_mods_$theme",array(&$this, 'WPVarnishPurgeAll'), 99);
+    
   }
 
   function WPVarnishLocalization() {
