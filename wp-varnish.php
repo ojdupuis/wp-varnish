@@ -26,6 +26,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 // List of url already purged
 $wpvarnish_url_purged=array();
 
+
 class WPVarnish {
   public $wpv_addr_optname;
   public $wpv_port_optname;
@@ -33,9 +34,7 @@ class WPVarnish {
   public $wpv_timeout_optname;
   public $wpv_update_pagenavi_optname;
   public $wpv_update_commentnavi_optname;
-  
-  
-
+    
   function WPVarnish() {
     global $post;
 
@@ -82,7 +81,19 @@ class WPVarnish {
     if ( (get_option($this->wpv_use_adminport_optname) == FALSE) ) {
       add_option($this->wpv_use_adminport_optname, $wpv_use_adminport_optval, '', 'yes');
     }
+    if ($this->is_activated()) {
+       $this->addActions();   
+    }    
+    
+        
+  }
 
+  function is_activated(){
+     return true;
+  }
+
+  function addActions(){
+    global $post;
     // Localization init
     add_action('init', array(&$this, 'WPVarnishLocalization'));
 
@@ -128,7 +139,6 @@ class WPVarnish {
     add_action("edit_link_category",array(&$this, 'WPVarnishPurgeLinkCategory'), 99);
     //Tag categories
     add_action("edit_post_tag",array(&$this, 'WPVarnishPurgeTagCategory'), 99);
-        
   }
 
   function WPVarnishLocalization() {
@@ -191,10 +201,7 @@ class WPVarnish {
      //Purge Tags
      $this->WPVarnishPurgeTags($wpv_postid);
     
-     // Plugin ajax-calendar http://wordpress.org/extend/plugins/ajax-calendar/
-     if (  array_key_exists('ajax-calendar/ajax-calendar.php', get_site_option( 'active_sitewide_plugins') )){
-       $this->WPVarnishPurgeAjaxCalendar($wpv_postid);
-     }
+
   }  
   
   // Purge category pages for a post
@@ -247,12 +254,7 @@ class WPVarnish {
 
   }
 
-  // Purge Ajax Calendar for a post
-  function WPVarnishPurgeAjaxCalendar($wpv_postid){
-     $month=str_replace(get_bloginfo('wpurl'),"",get_month_link(get_post_time('Y',false,$wpv_postid), get_post_time('m',true,$wpv_postid)));
-     $this->WPVarnishPurgeObject($month.'?ajax=true');
-  }
-  
+ 
   // Purge when links modified/edited/deleted
   function WPVarnishPurgeLink($linkId){
      // Purge all blog if widget links used in any sidebar
@@ -472,8 +474,21 @@ class WPVarnish {
 
     return $sha256;
   }
+  
+  function load_plugins_extensions(){
+     $extension_root=WP_PLUGIN_DIR."/wp-varnish/plugins";
+     if (dir_exists($extension_root)){
+        $handledir=opendir($extension_root);
+        while ($file = readdir($handledir)){
+           if (preg_match("/\.php$/",$file)){
+              require_once("$extension_root/$file");
+           }
+        }
+     }
+  }
 }
 
 $wpvarnish = & new WPVarnish();
+$wpvarnish->load_plugins_extensions();
 
 ?>
