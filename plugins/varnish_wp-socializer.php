@@ -9,10 +9,12 @@
 class WPVarnish_WPSocializer extends WPVarnishCore {
    
    function mustActivate(){
-      return array_key_exists('wp-socializer/wp-socializer.php', get_site_option( 'active_sitewide_plugins') ); 
+      echo "\nmoust socializer";
+      return $this->is_plugin_active('wp-socializer/wp-socializer.php');       
    }
      
    function addActions(){
+        echo "\n Addaction socializer";
         add_action('update_option_wpsr_addthis_data', array(&$this, 'WPVarnishPurgeAll'), 99);
         add_action('update_option_wpsr_buzz_data', array(&$this, 'WPVarnishPurgeAll'), 99);     
         add_action('update_option_wpsr_retweet_data', array(&$this, 'WPVarnishPurgeAll'), 99);     

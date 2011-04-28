@@ -7,7 +7,7 @@
 class WPVarnish_WPCumulus extends WPVarnishCore {
    
    function mustActivate(){
-      return array_key_exists('wp-cumulus/p', get_site_option( 'active_sitewide_plugins') ); 
+      return $this->is_plugin_active('wp-cumulus/wp-cumulus'); 
    }      
   
    function addActions(){      
