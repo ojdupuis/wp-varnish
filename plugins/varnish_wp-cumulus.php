@@ -1,5 +1,9 @@
 <?php
-
+/*
+ * Support for wp-cumulus widget
+ * Url http://www.roytanck.com/2008/03/06/wordpress-plugin-wp-cumulus-flash-based-tag-cloud/
+ * 
+ */
 class WPVarnish_WPCumulus extends WPVarnish {
       
    function is_activated(){

@@ -1,4 +1,10 @@
 <?php
+/*
+ * Support for purges for the ajax calendar widget 
+ * Url http://urbangiraffe.com/plugins/ajax-calendar/
+ * 
+ */
+
 
 class WPVarnish_WPAjaxCalendar extends WPVarnish {
    const NAME="Wp-Cumulus";
