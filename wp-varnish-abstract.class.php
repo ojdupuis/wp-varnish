@@ -124,7 +124,7 @@ class WPVarnishAbstract {
    * 
    */
   function is_plugin_active($plugin){
-     return array_key_exists($plugin, get_site_option( 'active_sitewide_plugins') )||array_key_exists($plugin, get_option( 'active_plugins') );
+     return array_key_exists($plugin, get_site_option( 'active_sitewide_plugins') )||in_array($plugin, get_option( 'active_plugins') );
   }
                  
 }

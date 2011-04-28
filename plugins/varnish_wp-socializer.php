@@ -9,7 +9,6 @@
 class WPVarnish_WPSocializer extends WPVarnishCore {
    
    function mustActivate(){
-      echo "\nmoust socializer";
       return $this->is_plugin_active('wp-socializer/wp-socializer.php');       
    }
      
