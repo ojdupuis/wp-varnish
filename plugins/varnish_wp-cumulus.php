@@ -2,7 +2,7 @@
 /*
  * Support for wp-cumulus widget
  * Url http://www.roytanck.com/2008/03/06/wordpress-plugin-wp-cumulus-flash-based-tag-cloud/
- * 
+ * Version 1.23
  */
 class WPVarnish_WPCumulus extends WPVarnishCore {
    

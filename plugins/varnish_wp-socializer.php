@@ -2,7 +2,7 @@
 /*
  * Support for purges for wp-socializer plugin 
  * Url http://www.aakashweb.com/wordpress-plugins/wp-socializer/
- * 
+ * Version 1.0
  */
 
 

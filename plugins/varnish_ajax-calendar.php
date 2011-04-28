@@ -2,7 +2,7 @@
 /*
  * Support for purges for the ajax calendar widget 
  * Url http://urbangiraffe.com/plugins/ajax-calendar/
- * 
+ * Version: 2.5.1
  */
 
 
