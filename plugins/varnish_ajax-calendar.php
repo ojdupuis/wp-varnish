@@ -10,12 +10,10 @@ class WPVarnish_WPAjaxCalendar extends WPVarnishAbstract {
    var $plugin="ajax-calendar";
    
    function mustActivate(){
-      echo "\nmust activate ajax calendar";
       return array_key_exists('ajax-calendar/ajax-calendar.php', get_site_option( 'active_sitewide_plugins') ); 
    }
      
    function addActions(){
-      echo "\nadd action ajax calendar";
         add_action('edit_post', array(&$this, 'WPVarnishPurgeAjaxCalendar'), 99);     
    }
    

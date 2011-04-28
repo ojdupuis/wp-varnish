@@ -8,9 +8,7 @@ class WPVarnishCore extends WPVarnishAbstract{
    
    function addActions(){
     global $post;
-    
-    echo "\n core addactions";
-    
+        
     // Localization init
     add_action('init', array(&$this, 'WPVarnishLocalization'));
 
