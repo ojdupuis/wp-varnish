@@ -1,6 +1,6 @@
 <?php
 /*
- * Support for Yahoo Media Plmayer plugin
+ * Support for Yahoo Media Player plugin
  * Url http://www.8bitkid.com/downloads/yahoo-media-player-plugin/
  * Version 1.3
  */
