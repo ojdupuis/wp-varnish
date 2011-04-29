@@ -11,8 +11,8 @@ class WPVarnish_WordpressRecentComments extends WPVarnishCore {
    }      
   
    function addActions(){      
-        add_action('widget_recentcomments', array(&$this, 'WPVarnishPurgeAll'), 99);
-        add_action('widget_recentcomments_options', array(&$this, 'WPVarnishPurgeAll'), 99); 
+        add_action('update_option_widget_recentcomments', array(&$this, 'WPVarnishPurgeAll'), 99);
+        add_action('update_option_widget_recentcomments_options', array(&$this, 'WPVarnishPurgeAll'), 99); 
    }
    
 }
