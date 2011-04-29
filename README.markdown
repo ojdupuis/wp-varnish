@@ -55,7 +55,7 @@ Planned in a really near future :
 ---------------------------------
   - update wordpress VCL (done commit d75458e688caa201cf353c54410b42d000f63140)
   - extension check for a warning when unsupported plugins or widget is installed.
-  - support for nextgen gallery
+  - support for nextgen gallery (done commit ee1328b078520cdde55eca84ca05bcec5befc48e)
   - wiki, especially for varnish configuration.
 
 Changelog
