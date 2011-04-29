@@ -30,20 +30,24 @@ class WPVarnishAbstract {
     $wpv_update_commentnavi_optval = 0;
     $wpv_use_adminport_optval = 0;
     
+    add_action('wpvarnish_purgeobject',array($this,'_WPVarnishPurgeObject'),99);
     add_action('plugins_loaded', array(&$this, 'activateExtension'), 99);
             
   }
   
-    
+  // Wrapper for _WPVarnishPurgeObject to be able to overload it
+  function WPVarnishPurgeObject($wpv_url) {
+     do_action('wpvarnish_purgeobject',$wpv_url,null);         
+  }  
   // WPVarnishPurgeObject - Takes a location as an argument and purges this object
   // from the varnish cache.
-  function WPVarnishPurgeObject($wpv_url) {
+  function _WPVarnishPurgeObject($wpv_url,$useragent=null) {
     global $varnish_servers;
     // list of urls already purged
     global $wpvarnish_url_purged;
-
+    echo "\n INITIAL $wpv_url $useragent";
     // if url already purged or purgeAll already sent
-    if (in_array($wpv_url,$wpvarnish_url_purged)){   
+    if (in_array($wpv_url.$useragent,$wpvarnish_url_purged)){   
        return;
     }
     
@@ -92,13 +96,18 @@ class WPVarnishAbstract {
       } else {
         $out = "PURGE $wpv_url HTTP/1.0\r\n";
         $out .= "Host: $wpv_host\r\n";
+        if ($useragent != null){
+           $out .= "User-Agent: $useragent\r\n";
+        }
         $out .= "Connection: Close\r\n\r\n";
       }
       fwrite($varnish_sock, $out);
       fclose($varnish_sock);
     }
     // store url as purged
-    $wpvarnish_url_purged[]=$wpv_url;
+       $wpvarnish_url_purged[]=$wpv_url.$useragent;
+
+    
   }
 
   function WPAuth($challenge, $secret) {
