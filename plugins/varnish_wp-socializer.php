@@ -13,7 +13,6 @@ class WPVarnish_WPSocializer extends WPVarnishCore {
    }
      
    function addActions(){
-        echo "\n Addaction socializer";
         add_action('update_option_wpsr_addthis_data', array(&$this, 'WPVarnishPurgeAll'), 99);
         add_action('update_option_wpsr_buzz_data', array(&$this, 'WPVarnishPurgeAll'), 99);     
         add_action('update_option_wpsr_retweet_data', array(&$this, 'WPVarnishPurgeAll'), 99);     
