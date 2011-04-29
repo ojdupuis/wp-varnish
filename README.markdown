@@ -1,12 +1,13 @@
-WordPress Varnish
-=================
+WordPress VarnishMia
+====================
 
-* Contributors: pkhamre, wfelipe, eitch
-* Donate link: http://github.com/pkhamre/wp-varnish
+Based on Varsnish plugins by pkhamre, wfelipe, eitch, but heavily forked for extensibility.
+
+* Contributor: Olivier Dupuis
 * Tags: cache, caching, performance, varnish, purge, speed
 * Requires at least: 2.9.2
-* Tested up to: 2.9.2
-* Stable tag: 0.3
+* Tested up to: 3.1.1
+* Stable tag: 0.9
 
 WordPress Varnish is a simple plugin that purges new and edited content.
 
