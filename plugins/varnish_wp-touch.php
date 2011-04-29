@@ -1,8 +1,8 @@
 <?php
 /*
- * Support for purges for the ajax calendar widget 
- * Url http://urbangiraffe.com/plugins/ajax-calendar/
- * Version: 2.5.1
+ * Support for purges for the wptouch plugins
+ * Url http://wordpress.org/extend/plugins/wptouch/
+ * Version: 1.9.25
  */
 
 
