@@ -45,7 +45,7 @@ class WPVarnishAbstract {
     global $varnish_servers;
     // list of urls already purged
     global $wpvarnish_url_purged;
-    echo "\n INITIAL $wpv_url $useragent";
+
     // if url already purged or purgeAll already sent
     if (in_array($wpv_url.$useragent,$wpvarnish_url_purged)){   
        return;

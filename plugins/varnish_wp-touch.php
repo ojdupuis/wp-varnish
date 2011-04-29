@@ -18,8 +18,7 @@ class WPVarnish_WPTouch extends WPVarnishAbstract {
    }
    
    // We need to purge the normal and the mobile version of the page
-   function WPtouchPurgeObject($wpv_url){
-      echo "\n WPTOUCH $wpv_url";
+   function WPtouchPurgeObject($wpv_url){      
       foreach (array('Android','Windows NT 6.0') as $useragent){
          $this->_WPVarnishPurgeObject($wpv_url,$useragent);
       }
