@@ -8,13 +8,7 @@ class WPVarnishCore extends WPVarnishAbstract{
    
    function addActions(){
     global $post;
-        
-    // Localization init
-    add_action('init', array(&$this, 'WPVarnishLocalization'));
-
-    // Add Administration Interface
-    add_action('admin_menu', array(&$this, 'WPVarnishAdminMenu'));
-
+            
     // When posts/pages are published, edited or deleted
     add_action('edit_post', array(&$this, 'WPVarnishPurgePost'), 99);
     add_action('edit_post', array(&$this, 'WPVarnishPurgePostDependencies'), 99);

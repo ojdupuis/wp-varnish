@@ -38,6 +38,13 @@ class WPVarnishMia {
   public $wpv_update_pagenavi_optname;
   public $wpv_update_commentnavi_optname;
     
+  function init(){
+     // Localization init
+    add_action('init', array(&$this, 'WPVarnishLocalization'));
+
+    // Add Administration Interface
+    add_action('admin_menu', array(&$this, 'WPVarnishAdminMenu'));
+  }  
   function WPVarnishMia() {
     global $post;
     
@@ -67,7 +74,10 @@ class WPVarnishMia {
 
     if ( (get_option($this->wpv_use_adminport_optname) == FALSE) ) {
       add_option($this->wpv_use_adminport_optname, $wpv_use_adminport_optval, '', 'yes');
-    }    
+    }
+      
+    
+      
         
   }
   
@@ -359,6 +369,8 @@ class WPVarnishMia {
 }
 
 $wpvarnish = & new WPVarnishMia();
+$wpvarnish->init();
+// Initialize main object
 // load basic purges
 require_once('wp-varnish-core.class.php');
 // load extension purges
