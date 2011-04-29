@@ -24,6 +24,7 @@ This section describes how to install the plugin and get it working.
 
 1. Upload `wp-varnish/` to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
+3. use the vcl provided to configure your varnish instance
 
 Frequently Asked Questions 
 --------------------------
