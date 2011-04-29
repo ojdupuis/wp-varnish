@@ -6,13 +6,13 @@
  */
 class WPVarnish_WordpressRecentComments extends WPVarnishCore {
    
-   function mustActivate(){
+   function mustActivate(){      
       return $this->is_plugin_active('Wordpress-Recent-Comments/wordpress-recent-comments.php'); 
    }      
   
-   function addActions(){      
+   function addActions(){     
         add_action('update_option_widget_recentcomments', array(&$this, 'WPVarnishPurgeAll'), 99);
-        add_action('update_option_widget_recentcomments_options', array(&$this, 'WPVarnishPurgeAll'), 99); 
+        add_action('update_option_wp_recentcomments_options', array(&$this, 'WPVarnishPurgeAll'), 99); 
    }
    
 }
