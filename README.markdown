@@ -24,6 +24,7 @@ This section describes how to install the plugin and get it working.
 
 1. Upload `wp-varnish/` to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
+3. use the vcl provided to configure your varnish instance
 
 Frequently Asked Questions 
 --------------------------
@@ -54,7 +55,7 @@ Planned in a really near future :
 ---------------------------------
   - update wordpress VCL (done commit d75458e688caa201cf353c54410b42d000f63140)
   - extension check for a warning when unsupported plugins or widget is installed.
-  - support for nextgen gallery
+  - support for nextgen gallery (done commit ee1328b078520cdde55eca84ca05bcec5befc48e)
   - wiki, especially for varnish configuration.
 
 Upgrade Notice
