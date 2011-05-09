@@ -57,8 +57,17 @@ Planned in a really near future :
   - support for nextgen gallery
   - wiki, especially for varnish configuration.
 
+Upgrade Notice
+--------------
+* 0.91 : deactivate v0.9 on network, then uninstall the plugins. Then install 0.91 from scratch. This is due to intense renaming to avoid conflicts with original WP-Varnish plugin.
+* 0.9: initial release, deactivate WP-Varnish
+
 Changelog
 ---------
+### 0.91 
+* rename classes, files and options to avoid conflicts with WP-Varnish,
+* plugins name is now varnish-purger
+
 
 ### 0.9
 * refactorisation of core for extensions
