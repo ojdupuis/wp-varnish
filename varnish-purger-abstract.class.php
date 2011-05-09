@@ -13,7 +13,15 @@ class WPVarnishPurgerAbstract {
     
   function WPVarnishPurgerAbstract() {
     global $post;
-        
+
+    $this->wpv_addr_optname = "WPVarnishPurger_addr";
+    $this->wpv_port_optname = "WPVarnishPurger_port";
+    $this->wpv_secret_optname = "WPVarnishPurger_secret";
+    $this->wpv_timeout_optname = "WPVarnishPurger_timeout";
+    $this->wpv_update_pagenavi_optname = "WPVarnishPurger_update_pagenavi";
+    $this->wpv_update_commentnavi_optname = "WPVarnishPurger_update_commentnavi";
+    $this->wpv_use_adminport_optname = "WPVarnishPurger_use_adminport";
+    
     $wpv_addr_optval = array ("127.0.0.1");
     $wpv_port_optval = array (80);
     $wpv_secret_optval = array ("");
