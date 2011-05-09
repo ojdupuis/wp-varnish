@@ -216,7 +216,6 @@ class WPVarnishPurger {
   function VarnishPurgerAdmin() {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
        if (current_user_can('administrator')) {
-          var_dump($this);
           if (isset($_POST['WPVarnishPurger_admin'])) {
              if (!empty($_POST["$this->wpv_addr_optname"])) {
                 $wpv_addr_optval = $_POST["$this->wpv_addr_optname"];
