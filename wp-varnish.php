@@ -1,26 +1,18 @@
 <?php
 /*
-Plugin Name: WordPress Varnish
-Plugin URI: http://github.com/pkhamre/wp-varnish
-Version: 0.3
-Author: <a href="http://github.com/pkhamre/">Pål-Kristian Hamre</a>
-Description: A plugin for purging Varnish cache when content is published or edited.
+Plugin Name: WordPress Varnish Purges
+Plugin URI: https://github.com/ojdupuis/wp-varnish/tree/Support_Extensions
+Version: 0.9
+Author: <a href="http://github.com/ojdupuis/">Olivier Dupuis</a> for Le Monde interactif
+Description: A plugin for purging Varnish cache when content is published or edited. Based on Varsnish plugins by pkhamre, wfelipe, eitch, but heavily forked for extensibility.
 
-Copyright 2010 Pål-Kristian Hamre  (email : post_at_pkhamre_dot_com)
+Based on Varsnish plugins by pkhamre, wfelipe, eitch, but heavily forked for extensibility.
 
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
+WordPress Varnish Purges is a plugin that purges new and edited content, it's intent is to be usable for a multi-site installation, 
+to support all necessary purge orders for wordpress and to be expandable via extensions.
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+This plugin purges your varnish cache it's intent is do do it for any action taken. 
+This plugin supports what is called extensions that can be added to add special purges for specific wordpress plugins
 */
 
 // List of url already purged
@@ -30,7 +22,7 @@ $wpvarnish_extension_activated=array();
 require_once('wp-varnish-abstract.class.php');
 
 
-class WPVarnishMia {
+class WPVarnishPurges {
   public $wpv_addr_optname;
   public $wpv_port_optname;
   public $wpv_secret_optname;
@@ -368,12 +360,12 @@ class WPVarnishMia {
                   
 }
 
-$wpvarnish = & new WPVarnishMia();
-$wpvarnish->init();
+$wpvarnishpurges = & new WPVarnishPurges();
+$wpvarnishpurges->init();
 // Initialize main object
 // load basic purges
 require_once('wp-varnish-core.class.php');
 // load extension purges
-$wpvarnish->load_plugins_extensions();
+$wpvarnishpurges->load_plugins_extensions();
 
 ?>
