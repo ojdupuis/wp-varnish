@@ -52,8 +52,8 @@ class WPVarnishPurger {
     $wpv_port_optval = array (80);
     $wpv_secret_optval = array ("");
     $wpv_timeout_optval = 5;
-    $wpv_update_pagenavi_optval = 0;
-    $wpv_update_commentnavi_optval = 0;
+    $wpv_update_pagenavi_optval = 1;
+    $wpv_update_commentnavi_optval = 1;
     $wpv_use_adminport_optval = 0;
     
     if ( (get_site_option($this->wpv_addr_optname) == FALSE) ) {
@@ -336,9 +336,9 @@ class WPVarnishPurger {
 
       <p><input type="checkbox" name="WPVarnishPurger_use_adminport" value="1" <?php if ($wpv_use_adminport_optval == 1) echo 'checked '?>/> <?php echo __("Use admin port instead of PURGE method.",'wp-varnish-purger'); ?></p>
 
-      <p><input type="checkbox" name="WPVarnishPurger_update_pagenavi" value="1" <?php if ($wpv_update_pagenavi_optval == 1) echo 'checked '?>/> <?php echo __("Also purge all page navigation (experimental, use carefully, it will include a bit more load on varnish servers.)",'wp-varnish-purger'); ?></p>
+      <p><input type="checkbox" name="WPVarnishPurger_update_pagenavi" value="1" <?php if ($wpv_update_pagenavi_optval == 1) echo 'checked '?>/> <?php echo __("Also purge all page navigation (it will include a bit more load on varnish servers.)",'wp-varnish-purger'); ?></p>
 
-      <p><input type="checkbox" name="WPVarnishPurger_update_commentnavi" value="1" <?php if ($wpv_update_commentnavi_optval == 1) echo 'checked '?>/> <?php echo __("Also purge all comment navigation (experimental, use carefully, it will include a bit more load on varnish servers.)",'wp-varnish-purger'); ?></p>
+      <p><input type="checkbox" name="WPVarnishPurger_update_commentnavi" value="1" <?php if ($wpv_update_commentnavi_optval == 1) echo 'checked '?>/> <?php echo __("Also purge all comment navigation (it will include a bit more load on varnish servers.)",'wp-varnish-purger'); ?></p>
 
       <p class="submit"><input type="submit" class="button-primary" name="WPVarnishPurger_admin" value="<?php echo __("Save Changes",'wp-varnish-purger'); ?>" /></p>
       <p> <h3>For the current blog only:</h3></p>
