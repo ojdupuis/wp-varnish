@@ -21,7 +21,7 @@ $WPVarnishPurger_extension_activated=array();
 
 require_once('varnish-purger-core.class.php');
 
-if (!class_exists(WPVarnishPurger)){
+if (!class_exists('WPVarnishPurger')){
    class WPVarnishPurger {
      public $wpv_addr_optname;
      public $wpv_port_optname;

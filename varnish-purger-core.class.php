@@ -54,7 +54,7 @@ class WPVarnishPurgerCore extends WPVarnishPurgerAbstract{
   }     
   // WPVarnishPurgerPurgeAll - Using a regex, clear all blog cache. Use carefully.
   function WPVarnishPurgerPurgeAll() {
-    $this->WPVarnishPurgerPurgeObject('/(.*)');
+    $this->WPVarnishPurgerPurgeObject('/.*');
   }
 
   // WPVarnishPurgerPurgePost - Takes a post id (number) as an argument and generates
@@ -86,7 +86,7 @@ class WPVarnishPurgerCore extends WPVarnishPurgerAbstract{
 
        // Also purges comments navigation
        if (get_site_option($this->wpv_update_commentnavi_optname) == 1) {
-          $this->WPVarnishPurgerPurgeObject('/\\\?comments_popup=' . $wpv_postid . '&(.*)');
+          $this->WPVarnishPurgerPurgeObject('/\\\?comments_popup=' . $wpv_postid . '&.*');
        }
 
     }
@@ -172,7 +172,7 @@ class WPVarnishPurgerCore extends WPVarnishPurgerAbstract{
 
     // Also purges page navigation
     if (get_site_option($this->wpv_update_pagenavi_optname) == 1) {
-       $this->WPVarnishPurgerPurgeObject("/page/(.*)");
+       $this->WPVarnishPurgerPurgeObject("/page/.*");
     }
   }
   

@@ -79,9 +79,26 @@ sub vcl_recv {
         # ##################
         # 98)Logged in used
         # ##################
-        if ( req.http.Cookie ~ "wordpressuser=") {
-            set req.http.Domaine = regsub(req.http.Cookie,"wordpressuser=([^;]+)","\1");
-            if (req.http.Domaine == regsub(req.http.Host,"^([^\.]+)\.","\1")){
+        # Version A : the toolbar for loggedin users will be displayed on every blogs of the network
+        if ( req.http.Cookie ~ "wordpress[^=]=") {
+           return (pass);         
+        }
+        # Version B: the toolbar for loggedin users will be displayed only on their blogs (better hit ratio for varnish)
+        C{
+           int strpos(char *haystack, char *needle)
+           {
+              char *p = strstr(haystack, needle);
+              if (p)
+                return p - haystack;
+              return -1;   // Not found = -1.
+           }
+        }        
+        if ( req.http.Cookie ~ "wordpress[^=]=") {
+            set req.http.WPCookieValue = regsub(req.http.Cookie,".*wordpress_[^=]+=([^;]+).*","\1");
+            
+            set req.http.DomaineRegExp = "wordpress[^=]=" req.http.Domaine;   
+            set req.http.Domaine = regsub(req.http.Host,"^([^\.]+)\.","\1");
+            if ( req.http.Cookie ~ req.http.Domaine ){
                 return (pass);
             }
         }
